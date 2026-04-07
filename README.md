@@ -153,8 +153,18 @@ Vibe Trip Agent solves these problems with:
 | **GitHub Actions** | CI/CD pipeline |
 
 ---
+## UML Diagrams
 
+## Use Case Diagram
+![use_case](use_case.png)
+## Data Flow  Diagram
+![data_flow](data_flow.png)
+## Sequence Diagram
+![sequence_diagram](sequence_diagram.png)
+## Class Diagram
+![class_diagram](class_diagram.png)
 ## 🧩 System Architecture
+
 
 ```mermaid
 graph TB
@@ -197,173 +207,4 @@ graph TB
     E --> A
     E --> B
 
-    sequenceDiagram
-    participant User
-    participant App as Flutter App
-    participant API as Cloud Run API
-    participant AI as Gemini AI
-    participant DB as Firestore
-    participant Provider as Service Provider
-    
-    User->>App: Enter vibe ("Cyberpunk Tokyo")
-    App->>API: POST /api/generate-itinerary
-    API->>AI: Generate travel plan
-    AI-->>API: Structured itinerary JSON
-    API-->>App: Return itinerary
-    App->>User: Display trip plan
-    
-    User->>App: Select & book
-    App->>DB: Save booking
-    DB->>Provider: Send notification
-    Provider-->>DB: Confirm booking
-    DB-->>App: Update status
-    App->>User: "Booking confirmed!"
 
-    graph LR
-    subgraph "Actors"
-        User[👤 Customer]
-        Provider[🧑‍💼 Provider]
-        Admin[🔧 Admin]
-    end
-    
-    subgraph "Use Cases"
-        UC1[Browse Vibes]
-        UC2[Generate Itinerary]
-        UC3[Chat with Provider]
-        UC4[Book Trip]
-        UC5[Manage Listings]
-        UC6[Respond to Chats]
-        UC7[Confirm Bookings]
-        UC8[Analytics Dashboard]
-    end
-    
-    User --> UC1
-    User --> UC2
-    User --> UC3
-    User --> UC4
-    
-    Provider --> UC5
-    Provider --> UC6
-    Provider --> UC7
-    
-    Admin --> UC8
-
-    sequenceDiagram
-    autonumber
-    actor User
-    participant App as Flutter App
-    participant API as Cloud Run API
-    participant AI as Gemini AI
-    participant DB as Firestore
-    participant FCM as Firebase Cloud Messaging
-    actor Provider
-    
-    User->>App: Input vibe + dates
-    App->>API: Generate itinerary request
-    API->>AI: Process vibe prompt
-    AI-->>API: Return structured plan
-    API-->>App: Display itinerary
-    
-    User->>App: Select provider
-    User->>App: Send inquiry message
-    App->>DB: Store message
-    DB->>FCM: Trigger notification
-    FCM->>Provider: "New inquiry received"
-    
-    Provider->>App: View & respond
-    App->>DB: Store response
-    DB->>FCM: Customer notification
-    FCM->>User: "Provider responded"
-    
-    User->>App: Confirm booking
-    App->>DB: Create booking record
-    DB->>FCM: Notify provider
-    FCM->>Provider: "New booking request"
-    
-    Provider->>App: Accept booking
-    App->>DB: Update status to "confirmed"
-    DB->>FCM: Customer notification
-    FCM->>User: "Booking confirmed!"
-    
-    App->>User: Show confirmation screen
-
-    classDiagram
-    class User {
-        +String id
-        +String name
-        +String email
-        +List~String~ preferences
-        +List~String~ savedVibes
-        +List~Booking~ bookings
-        +login()
-        +savePreferences()
-        +viewBookings()
-    }
-    
-    class Provider {
-        +String id
-        +String businessName
-        +String category
-        +List~Listing~ listings
-        +List~Booking~ bookings
-        +updateAvailability()
-        +respondToChat()
-        +confirmBooking()
-    }
-    
-    class Vibe {
-        +String id
-        +String mood
-        +List~String~ keywords
-        +List~Destination~ destinations
-        +matchScore()
-    }
-    
-    class Itinerary {
-        +String id
-        +String userId
-        +String vibe
-        +DateTime startDate
-        +DateTime endDate
-        +List~Day~ days
-        +double budget
-        +generate()
-        +optimize()
-    }
-    
-    class Booking {
-        +String id
-        +String userId
-        +String providerId
-        +String itineraryId
-        +BookingStatus status
-        +double totalPrice
-        +DateTime createdAt
-        +confirm()
-        +cancel()
-        +updateStatus()
-    }
-    
-    class Chat {
-        +String id
-        +String bookingId
-        +List~Message~ messages
-        +sendMessage()
-        +markAsRead()
-    }
-    
-    class Message {
-        +String id
-        +String senderId
-        +String content
-        +DateTime timestamp
-        +bool isRead
-    }
-    
-    User "1" -- "*" Booking
-    User "1" -- "*" Itinerary
-    Provider "1" -- "*" Booking
-    Booking "1" -- "1" Chat
-    Chat "1" -- "*" Message
-    Itinerary "1" -- "*" Booking
-    Vibe "*" -- "*" Destination
