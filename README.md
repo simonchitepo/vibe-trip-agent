@@ -13,26 +13,7 @@
 
 ---
 
-## 📖 Table of Contents
-- [Overview](#-overview)
-- [Problem Statement](#-problem-statement)
-- [Solution](#-solution)
-- [Core Features](#-core-features)
-- [Tech Stack](#-tech-stack)
-- [System Architecture](#-system-architecture)
-- [UML Diagrams](#-uml-diagrams)
-- [Project Structure](#-project-structure)
-- [Installation & Setup](#-installation--setup)
-- [Environment Configuration](#-environment-configuration)
-- [Deployment](#-deployment)
-- [API Documentation](#-api-documentation)
-- [Use Cases](#-use-cases)
-- [Roadmap](#-roadmap)
-- [Contributing](#-contributing)
-- [License](#-license)
-- [Support](#-support)
 
----
 
 ## 🚀 Overview
 
